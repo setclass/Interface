@@ -1,0 +1,78 @@
+* {
+  margin: 0px;
+  padding: 0px; }
+
+header {
+  border-bottom: 1px solid red; }
+  header .header {
+    width: 880px;
+    height: 57px;
+    margin: 0px auto;
+    margin-top: 10px; }
+
+section {
+  border-bottom: 1px solid gray; }
+  section .section {
+    width: 800px;
+    margin: 0px auto;
+    display: flex; }
+    section .section .left div {
+      width: 80px;
+      height: 30px;
+      font-size: 14px;
+      line-height: 30px;
+      text-align: center; }
+    section .section .left .kong1 {
+      height: 10px; }
+    section .section .left .kong2 {
+      height: 35px; }
+    section .section .left .kong3 {
+      height: 15px; }
+    section .section .left .kong4 {
+      height: 47px; }
+    section .section .input input {
+      width: 260px;
+      height: 34px;
+      border: 1px solid gray;
+      margin: 5px 0px; }
+    section .section .input span {
+      color: gray;
+      font-size: 12px; }
+    section .section .in {
+      width: 260px;
+      height: 30px;
+      display: flex;
+      justify-content: space-between; }
+      section .section .in div {
+        width: 80px;
+        height: 20px;
+        background: #eeeeee;
+        text-align: center;
+        line-height: 20px; }
+    section .section .ton {
+      width: 260px;
+      height: 34px;
+      background: #e42b30;
+      color: white;
+      border: none;
+      font-size: 14px; }
+      section .section .ton:link, section .section .ton :visited, section .section .ton :hover, section .section .ton :active {
+        color: white;
+        text-decoration: none; }
+      section .section .ton a:link {
+        color: white;
+        text-decoration: none; }
+    section .section p {
+      color: red;
+      font-size: 12px;
+      margin: 10px 0px; }
+
+.footer {
+  width: 880px;
+  margin: 20px auto; }
+  .footer p {
+    font-size: 12px;
+    color: gray;
+    text-align: center; }
+
+/*# sourceMappingURL=register.css.map */

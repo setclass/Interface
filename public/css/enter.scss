@@ -1,0 +1,87 @@
+@charset "UTF-8";
+.header{
+    width: 880px;
+    height: 50px;
+    margin: 0px auto;
+}
+.section{
+    width: 880px;
+    height: 370px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    .sec-right{
+        width: 300px;
+        .right-text{
+            display: flex;
+            span{
+                font-size: 14px;
+                margin-right: 80px;
+            }
+            p{
+               
+                font-size: 14px;
+                margin: 0px;
+            }
+            div{
+                width: 13px;
+                height: 19px;               
+                background: url("./../img/sprite_webpage.png");
+                background-position: -12px 58px;
+            }
+           
+        }
+    }
+    input{
+        width: 270px;
+        height: 36px;
+        border: 1px solid gray;
+        margin: 10px 0px;
+    }
+    .check{
+        width: 276px;
+        display: flex;
+        justify-content: space-between;
+        input{
+            width: 12px;
+            height: 12px;
+            border: none;
+            margin: 0px;
+        }
+        div{
+            font-size: 12px;
+        }
+        p{
+            margin: 0px;
+            font-size: 12px;
+        }
+    }
+    button{
+        width: 276px;
+        height: 36px;
+        background: #e52e33;
+        border: 0px;
+        border-radius: 2px;
+        color: white;
+        &:link,:visited,:hover,:active{
+            color: white;
+            text-decoration: none;
+        }
+        a{
+            &:link{
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
+
+}
+.footer{
+    width: 880px;
+    margin: 0px auto;
+    p{
+        font-size: 12px;
+        color: gray;
+        text-align: center;
+    }
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">layui 后台布局</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="">猫眼电影管理</a></li>
+
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        贤心
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退了</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        电影管理
+                    </li>
+
+
+                    <li class="layui-nav-item"><a href="">电影管理</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+           
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px; ">
+                
+                <button id="add">添加</button>
+               <input type="text" name="" id="">
+               <button></button>
+                <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+
+    </div>
+    <div id="set" style="display: none;">
+        <form class="layui-form" action="">
+            <div class="layui-form-item" style="padding: 10px 20px; ">
+                <label class="layui-form-label">封面</label>
+                <button type="button" class="layui-btn" id="test1">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <img src="" id="upImg" alt="" style="width: 200px; display: block; margin-left: 110px;">
+            </div>
+            <div class="layui-form-item" style="padding: 10px 20px;">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入名称"
+                        autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="padding: 10px 20px;">
+                <label class="layui-form-label">评分</label>
+                <div id="grade" style="margin-left: 120px;"></div>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        var tableIns
+    </script>
+
+    <script src="./layui/layui.js"></script>
+    <script src="./jquery.js"></script>
+    <script src="./javascripts/face.js"></script>
+    <script src="./javascripts/echarts.min.js"></script>
+    <script>
+        //JavaScript代码区域
+
+        var Tvalue = 1;
+
+        layui.use('rate', function () {
+            var rate = layui.rate;
+
+
+            layui.use('upload', function () {
+                var upload = layui.upload;
+
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#test1' //绑定元素
+                    , url: 'http://127.0.0.1:3000/users/upload' //上传接口
+
+                    , done: function (res) {
+                        $("#upImg").attr("src", "http://127.0.0.1:3000/upload/" + res.url);
+
+                    }
+                    , error: function () {
+                        //请求异常回调
+                    }
+                });
+            });
+
+            //点击添加按钮
+            
+            $("#add").click(function () {
+                $("#upImg").attr("src","");
+                $(".layui-input").val("");
+                Tvalue=1;
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+
+                    layer.open({
+                        area: ['400px', '500px'],
+                        type: 1,
+                        content: $("#set")
+                        , btn: ['提交', '关闭']
+                        , yes: function (index, layero) {
+                           
+                                let addCont = {
+                                    img: $("#upImg").attr("src"),
+                                    name: $(".layui-input").val(),
+                                    grade: Tvalue
+                                }
+
+                                $.ajax({
+                                    url: "http://127.0.0.1:3000/users/content",
+                                    type: "post",
+                                    data: addCont,
+                                    datatype: "json",
+                                    success: function (res) {
+                                        if (res.code == 1) {
+                                            alert("添加成功");
+                                            layer.closeAll();
+                                            tableIns.reload({
+                                                where: { //设定异步数据接口的额外参数，任意设
+                                                }
+                                                , page: {
+                                                }
+                                            });
+                                        } else {
+                                            alert("添加失败");
+                                        }
+                                    }
+                                })
+                            
+                        }
+                        , btn2: function (index, layero) {
+                            //按钮【按钮二】的回调
+
+                            //return false 开启该代码可禁止点击该按钮关闭
+                        }
+                        , cancel: function () {
+                            //右上角关闭回调
+
+                            //return false 开启该代码可禁止点击该按钮关闭
+                        }
+                    });
+                    //渲染
+
+                    var ins1 = rate.render({
+                        elem: '#grade', //绑定元素
+                        value: 1,
+                        text: true,
+                        setText: function (value) {
+                            var arrs = {
+                                '1': '1分'
+                                , '2': '2分'
+                                , '3': '3分'
+                                , '4': '4分',
+                                '5': '5分'
+                            };
+                            this.span.text(arrs[value] || (value + "分"));
+                        },
+                        choose: function (value) {
+                            Tvalue = value;
+                        }
+                    });
+                });
+            });
+        })
+
+        layui.use('table', function () {
+            var table = layui.table;
+            //第一个实例
+            tableIns = table.render({
+                elem: '#demo'
+                , height: 400
+                , url: 'http://127.0.0.1:3000/users/obtain' //数据接口
+                // , page: true //开启分页
+                , cols: [[ //表头
+                    , {
+                        field: 'img', title: '封面', width: 130, templet: function (d) {
+                            return `<img src=${d.img}>`
+                        }
+                    }
+                    , { field: 'name', title: '名称', width: 80 }
+                    , { field: 'grade', title: '评分', width: 80 }
+                    , {
+                        field: 'wealth', title: '操作', width: 134, templet: function (d) {
+                            return `
+                            <button type="button" class="layui-btn layui-btn-normal edit" style="width:40px;height:40px;padding:0px;line-height: 0px;" info=${JSON.stringify(d)}>编辑</button>
+                                    <button type="button" class="layui-btn del"  style="width:40px;height:40px;padding:0px 5px;line-height: 0px;" _id=${JSON.stringify(d)}>删除</button>`
+                        }
+                    }
+                ]]
+
+            });
+
+        });
+   
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+
+   </script>
+</body>
+
+</html>
